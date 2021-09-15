@@ -1,0 +1,1 @@
+g++ -std=c++11 ./cpp_task.cpp -o cpp_task && ./cpp_task

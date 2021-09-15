@@ -4,7 +4,8 @@
 
 using namespace std;
 
-int great_function_from_python(char *a) {
+int great_function_from_python(char *a)
+{
     cout << a << endl;
     int res = 0;
     //使用python之前，要调用Py_Initialize();这个函数进行初始化
@@ -30,14 +31,14 @@ int great_function_from_python(char *a) {
     //}
     //Py_BEGIN_ALLOW_THREADS;
     //Py_BLOCK_THREADS;
-   
+
     // If my MyPython.py file is in "/Users/xx/code", set the working path to "/Users/xx/code"
     // string path = "/Users/xx/code";
-    // PySys_SetPath(&path[0u]); 
+    // PySys_SetPath(&path[0u]);
     PyRun_SimpleString("import sys");
     PyRun_SimpleString("sys.path.append('./')");
-   
-    PyObject *pModule,*pFunc; 
+
+    PyObject *pModule, *pFunc;
     PyObject *pArgs, *pValue;
     //这里是要调用的文件名
     pModule = PyImport_ImportModule("consumer");
@@ -48,10 +49,10 @@ int great_function_from_python(char *a) {
     }
     /* build args */
     pArgs = PyTuple_New(1);
-    PyTuple_SetItem(pArgs,0,PyString_FromString(a));
+    PyTuple_SetItem(pArgs, 0, PyString_FromString(a));
     //这里是要调用的函数名
     pFunc = PyObject_GetAttrString(pModule, "requests_ops");
-    if (!pFunc || !PyCallable_Check(pFunc))  // 验证是否加载成功
+    if (!pFunc || !PyCallable_Check(pFunc)) // 验证是否加载成功
     {
         cout << "[ERROR] Can't find funftion " << endl;
         return 2;
@@ -59,26 +60,27 @@ int great_function_from_python(char *a) {
     pValue = PyObject_CallObject(pFunc, pArgs);
     //PyObject_CallFunction(pFunc, "zhengji");
     //PyObject_CallFunction(pFunc,"s", pArgs);
-    if (pValue)  // 验证是否调用成功
+    if (pValue) // 验证是否调用成功
     {
         res = PyInt_AsLong(pValue);
         cout << "result:" << res << endl;
-    } 
-    //cout << res << endl; 
-    Py_DECREF(pArgs); 
-    Py_DECREF(pFunc); 
+    }
+    //cout << res << endl;
+    Py_DECREF(pArgs);
+    Py_DECREF(pFunc);
     Py_DECREF(pModule);
-    
+
     //Py_UNBLOCK_THREADS;
     //Py_END_ALLOW_THREADS;
     //if (!nHold)
     //{
     //    PyGILState_Release(gstate);    //释放当前线程的GIL
-    //} 
+    //}
     //调用Py_Finalize，这个根Py_Initialize相对应的,必须在python调用完以后执行,否则找不到python module
     Py_Finalize();
     return res;
 }
-int main(int argc, char *argv[]) {
-   return great_function_from_python("{'a':'b'}"); 
+int main(int argc, char *argv[])
+{
+    return great_function_from_python("{'a':'b'}");
 }

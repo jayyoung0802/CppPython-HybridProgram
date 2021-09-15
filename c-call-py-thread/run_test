@@ -1,0 +1,11 @@
+
+# -L libdir, -I includepaht, -l libname
+
+# g++ -O3 -Wall -shared -std=c++11 -fPIC -Wl,-undefined,dynamic_lookup $(/Users/yangzhenjie/anaconda3/envs/py3.6/bin/python  -m pybind11 --includes) test.cpp -o test.so
+
+export PYTHONHOME=/Users/yangzhenjie/anaconda3/envs/py3.6
+export PYTHONPATH=$PYTHONHOME/bin
+export DYLD_LIBRARY_PATH=$PYTHONHOME/lib
+
+g++ -std=c++11 test.cpp -I /Users/yangzhenjie/anaconda3/envs/py3.6/include/python3.6m -L /Users/yangzhenjie/anaconda3/envs/py3.6/lib -lpython3.6m -o test -lpthread -lutil
+./test

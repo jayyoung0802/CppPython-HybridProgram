@@ -1,1 +1,0 @@
-g++ -o cpp_dll.so -shared -fPIC mypy.cpp
