@@ -9,7 +9,7 @@ c++多线程情况很多api需要python3+版本才支持
 
 
 ## 实验
-、、、
+```
     main   thread    task   
 1   cpp    cpp       cpp     
 2   cpp    cpp       py
@@ -32,4 +32,4 @@ c++多线程情况很多api需要python3+版本才支持
 #方案7比方案1快 有点不合常理,检查线程输出结果正确
 #方案7可以释放gil锁，采用多核
 
-、、、
+```
